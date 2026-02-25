@@ -111,7 +111,7 @@ export default function ContactPage() {
           <div>
             <Card>
               <CardHeader>
-                <CardTitle>Send us a Message</CardTitle>
+                <CardTitle>Review our Shop</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -178,7 +178,7 @@ export default function ContactPage() {
 
                   <Button type="submit" className="w-full">
                     <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    Submit Review
                   </Button>
                 </form>
               </CardContent>
