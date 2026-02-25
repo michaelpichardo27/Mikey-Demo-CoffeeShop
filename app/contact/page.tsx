@@ -7,22 +7,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Clock, Phone, Send } from "lucide-react"
+import { MapPin, Clock, Phone, Star } from "lucide-react"
 import { useState } from "react"
 import { Footer } from "@/components/footer"
+import { cn } from "@/lib/utils"
 
 export default function ContactPage() {
+  const [rating, setRating] = useState(0)
+  const [hoverRating, setHoverRating] = useState(0)
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    subject: "",
-    message: "",
+    review: "",
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission (e.g. send to API)
-    setFormData({ name: "", email: "", subject: "", message: "" })
+    setFormData({ name: "", review: "" })
+    setRating(0)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -107,77 +108,77 @@ export default function ContactPage() {
             </Card>
           </div>
 
-          {/* Contact Form */}
+          {/* Review Form */}
           <div>
             <Card>
               <CardHeader>
                 <CardTitle>Review our Shop</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Share your experience and help others discover us.
+                </p>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-2">
-                        Name
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Your name"
-                      />
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Your rating</label>
+                    <div className="flex gap-1" role="group" aria-label="Rate 1 to 5 stars">
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        const active = (hoverRating || rating) >= star
+                        return (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            onMouseEnter={() => setHoverRating(star)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            className="p-0.5 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            aria-label={`${star} star${star > 1 ? "s" : ""}`}
+                          >
+                            <Star
+                              className={cn(
+                                "w-8 h-8 transition-colors",
+                                active ? "fill-primary text-primary" : "text-muted-foreground"
+                              )}
+                            />
+                          </button>
+                        )
+                      })}
                     </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-2">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="your@email.com"
-                      />
-                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Click to rate</p>
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                      Subject
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      Your name
                     </label>
                     <Input
-                      id="subject"
-                      name="subject"
+                      id="name"
+                      name="name"
                       type="text"
-                      value={formData.subject}
+                      value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="What's this about?"
+                      placeholder="How should we call you?"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Message
+                    <label htmlFor="review" className="block text-sm font-medium mb-2">
+                      Your review
                     </label>
                     <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
+                      id="review"
+                      name="review"
+                      value={formData.review}
                       onChange={handleChange}
                       required
-                      placeholder="Tell us what's on your mind..."
-                      rows={6}
+                      placeholder="What did you try? How was the coffee, food, or vibe? We'd love to hear it."
+                      rows={5}
+                      className="resize-none"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full">
-                    <Send className="w-4 h-4 mr-2" />
+                  <Button type="submit" className="w-full" disabled={rating === 0}>
                     Submit Review
                   </Button>
                 </form>
