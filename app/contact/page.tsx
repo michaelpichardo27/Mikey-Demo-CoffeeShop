@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Clock, Phone, Mail, Send } from "lucide-react"
+import { MapPin, Clock, Phone, Send } from "lucide-react"
 import { useState } from "react"
 import { Footer } from "@/components/footer"
 
@@ -103,34 +103,6 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">(555) 123-BREW</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-primary" />
-                  Email
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">hello@brewandbite.com</p>
-              </CardContent>
-            </Card>
-
-            {/* Google Map Placeholder */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Find Us</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="w-full h-64 bg-muted rounded-lg flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <MapPin className="w-12 h-12 mx-auto mb-2" />
-                    <p>Interactive Google Map</p>
-                    <p className="text-sm">123 Coffee Street, Downtown District</p>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           </div>
