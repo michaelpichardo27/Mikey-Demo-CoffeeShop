@@ -17,6 +17,8 @@ export interface ProductImageProps extends Omit<ImageProps, "fill" | "style"> {
   sizesContext?: ProductImageSizesContext
   /** Aspect ratio class, e.g. aspect-[4/3] or aspect-square */
   aspectRatio?: "4/3" | "square" | "3/4"
+  /** contain = fit whole image (may show padding); cover = fill area (may crop) */
+  objectFit?: "contain" | "cover"
   /** Optional custom className for the wrapper */
   containerClassName?: string
   /** Show skeleton while loading */
@@ -34,6 +36,7 @@ export function ProductImage({
   alt,
   sizesContext = "grid",
   aspectRatio = "4/3",
+  objectFit = "contain",
   containerClassName,
   showSkeleton = true,
   className,
@@ -41,6 +44,7 @@ export function ProductImage({
 }: ProductImageProps) {
   const [isLoading, setIsLoading] = useState(true)
   const sizes = sizesByContext[sizesContext]
+  const useCover = objectFit === "cover"
 
   return (
     <div
@@ -56,14 +60,19 @@ export function ProductImage({
           aria-hidden
         />
       )}
-      <div className="absolute inset-2 flex items-center justify-center rounded-md bg-background/80">
+      <div
+        className={cn(
+          "absolute rounded-md",
+          useCover ? "inset-0" : "inset-2 flex items-center justify-center bg-background/80"
+        )}
+      >
         <Image
           src={src || "/placeholder.svg"}
           alt={alt ?? "Product"}
           fill
           sizes={sizes}
           className={cn(
-            "object-contain p-1",
+            useCover ? "object-cover" : "object-contain p-1",
             isLoading && "opacity-0",
             className
           )}

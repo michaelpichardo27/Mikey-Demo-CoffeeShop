@@ -40,7 +40,8 @@ export function MenuItemCard({ id, name, description, price, image, category, is
           src={image}
           alt={name}
           sizesContext="grid"
-          aspectRatio="4/3"
+          aspectRatio="square"
+          objectFit="cover"
           containerClassName="rounded-none border-0 border-b"
         />
         {isSpecial && <Badge className="absolute top-2 left-2 z-10 bg-secondary text-secondary-foreground">Special</Badge>}
